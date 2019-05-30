@@ -1,0 +1,186 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/*to change the font accourding to the screen size*/
+html {
+    font-size: 62.5%
+}
+/*media queries*/
+@media only screen and (max-width: 37.5em) {
+    html {
+        font-size: 56.25%;
+    }
+}
+
+@media only screen and (max-width: 56.25em) {
+    html {
+        font-size: 50%;
+    }
+}
+
+@media only screen and (min-width: 112.5em) {
+    html {
+        font-size: 75%
+    }
+}
+body{
+  font-family: 'Montserrat', sans-serif;
+
+}
+header{
+/*  background: linear-gradient(white, red),url('images');*/
+/*  background-image: linear-gradient(to top right ,rgba(0, 0, 0, 0.27), rgba(0, 0, 0, 0.04)),url('images/cover2.jpg');*/
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.33)), to(rgba(0, 0, 0, 0.63))),url('images/cover4.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.33), rgba(0, 0, 0, 0.63)),url('images/cover4.jpg');
+    background-size: cover;
+/*  background-position: center;*/
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+  height: 100%;
+  width: 100%;
+    padding-bottom: 10rem;
+}
+nav{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  height: 5rem;
+  background-color: rgba(0, 0, 0, 0.74);
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.nav-controls{
+    color:antiquewhite;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    padding-right: 2rem;
+}
+.nav-controls a{
+    text-decoration: none;
+    color: white;
+}
+.nav-controls i{
+    font-size: 3rem;
+    -webkit-transform: translateY(4px);
+    transform: translateY(4px);
+}
+.logo{
+  color: white;
+  font-size: 2rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1.3px;
+  padding-left: 2rem;;
+  display: -webkit-box;;
+  display: -ms-flexbox;;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  height: 100%;
+}
+.main-section{
+    background-color: rgba(7, 7, 7, 0.72);
+    border: 2px solid white;
+    margin: 3rem auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 60%;
+    padding: 3rem;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    border-radius: 5px;
+}
+@media only screen and (max-width: 37.5em) {
+    .main-section{
+        width: 95%;
+    }
+}
+.btn{
+    border: none;
+    width: 6rem;
+    background-color: beige;
+    text-align: center;
+    padding: 1.1em;
+    border-radius: 5px;
+    font-size: 1.3rem;
+    outline: none;
+    cursor: pointer;
+    margin: 1.8rem;
+}
+.result-body{
+
+}
+.control-buttons{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+}
+.control-buttons a{
+    padding: 1.6rem;
+    text-transform: none;
+    color: black;
+    text-decoration: none;
+}
+.canvas{
+    background-color: black;
+    border: 2px solid white;
+}
+.next-btn{
+/*    margin-left: 2rem;*/
+    background-color: #13C91E;
+    color: white !important;
+}
+.color-btn{
+    width:4rem;
+    height:4rem;
+    margin: 2rem;
+    border-radius: 50%;
+    border: 2px solid white;
+/*    border-radius: 15px;*/
+}
+@media only screen and (max-width: 37.5em) {
+    .color-btn{
+        margin: 1rem;
+
+    }
+}
+.pick-color{
+    border: 2px solid white;
+    border-radius: 15px;
+    cursor: pointer;
+    color: white;
+    margin: 1rem 5rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+@media only screen and (max-width: 37.5em) {
+    .pick-color{
+         margin: 0rem .2rem;
+
+    }
+}

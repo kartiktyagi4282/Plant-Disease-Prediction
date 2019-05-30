@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ptreat</title>
+    <link rel="stylesheet" href="{% static 'style.css'%}">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-leaf"></i> &nbsp;Ptreat
+            </div>
+            <div class="nav-controls">
+                <a href="#">
+                    Login <i class="fas fa-angle-right"></i>
+                </a>
+            </div>
+
+        </nav>
+        <div class="header-box">
+
+            <div class="header-text1">
+                Upload your plant image and get to know about it
+            </div>
+            <div class="container">
+                <i class="fas fa-seedling plant"></i>
+<!--                <div class="upload-box">-->
+
+                <form method="post" class="upload-box" novalidate enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <!--                <div class="file-upload-wrapper" data-text="Select your file!">-->
+                    <!--                    <input name="image" type="file" >-->
+                    <!--                </div>-->
+                    <div class="file-upload">
+                        <label for="upload" class="file-upload__label">Upload Plant Image</label>
+                        <input id="upload" class="file-upload__input" type="file" name="image">
+                    </div>
+                    <button type="submit" class="upload-button"><i class="fas fa-caret-right"></i></button>
+                </form>
+<!--                </div>-->
+
+            </div>
+            <div class="header-text2">
+                Simple, Fast & Acurate
+            </div>
+        </div>
+
+    </header>
+    <section class="section1">
+
+        <div class="section1-body">
+           <div class="section1-body-text">
+            We are Ptreat.
+              <br>
+              <div class="section1-body-text2">
+                 Encouraging disease Prediction through the power of AI.
+                 <br>
+                 <br>
+                 <br>
+                  Step to follow
+                  <br>
+                  <br>
+                  1. Upload Image <br>
+                  2. Select Leaf Outline <br>
+                  3. Get Prediction for disease
+              </div>
+
+           </div>
+
+        <div class="section1-background-mobile">
+            <img src="{% static 'images/background-mobile-lines.svg'%}" alt="">
+        </div>
+        </div>
+
+    </section>
+<!--    <main>-->
+
+<!--    </main>-->
+</body>
+<script>
+
+
+</script>
+
+</html>

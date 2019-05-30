@@ -1,0 +1,284 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="{% static 'edit.css'%}">
+<!--    <script src="http://hongru.github.io/proj/canvas2image/canvas2image.js"></script>-->
+
+<script type="text/javascript">
+    var canvas, ctx, flag = false,
+        prevX = 0,
+        currX = 0,
+        prevY = 0,
+        currY = 0,
+        dot_flag = false;
+
+    var x = "black",
+        y = 2;
+
+    function init() {
+
+        canvas = document.getElementById('can');
+
+
+        var image = document.getElementById("html5");
+
+        ctx = canvas.getContext("2d");
+        ctx.drawImage(image, 0, 0, 256, 256);
+//        ctx.drawImage(image, 10, 10, 256, 256);
+        w = canvas.width;
+        h = canvas.height;
+        ///////////////////////////////
+        //          canvas.ontouchmove = function(event){
+        //            event.preventDefault();
+        //
+        //            var newx = event.touches[0].clientX;
+        //            var newy = event.touches[0].clientY - canvastop;
+        //
+        //            line(lastx,lasty, newx,newy);
+        //
+        //            lastx = newx;
+        //            lasty = newy;
+        //        }
+        //
+        ///////////////////////////////
+        canvas.addEventListener("mousemove", function(e) {
+            findxy('move', e)
+        }, false);
+        canvas.addEventListener("mousedown", function(e) {
+            findxy('down', e)
+        }, false);
+        canvas.addEventListener("mouseup", function(e) {
+            findxy('up', e)
+        }, false);
+        canvas.addEventListener("mouseout", function(e) {
+            findxy('out', e)
+        }, false);
+
+
+        /////////////////////////////
+        document.ontouchmove = function(e) {
+            e.preventDefault();
+        }
+
+        var canvastop = canvas.offsetTop;
+        var lastx;
+        var lasty;
+
+        ctx.strokeStyle = "#000000";
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.lineWidth = 5;
+
+        canvas.ontouchstart = function(event) {
+            event.preventDefault();
+
+            lastx = event.touches[0].clientX - 100;
+            lasty = event.touches[0].clientY - canvastop - 20;
+
+            dot(lastx, lasty);
+        }
+
+        canvas.ontouchmove = function(event) {
+            event.preventDefault();
+            var newx = event.touches[0].clientX - 100;
+            var newy = event.touches[0].clientY - canvastop - 20;
+
+            line(lastx, lasty, newx, newy);
+
+            lastx = newx;
+            lasty = newy;
+        }
+    }
+
+    function color(obj) {
+        switch (obj.id) {
+            case "green":
+                x = "green";
+                break;
+            case "blue":
+                x = "blue";
+                break;
+            case "red":
+                x = "red";
+                break;
+            case "yellow":
+                x = "yellow";
+                break;
+            case "orange":
+                x = "orange";
+                break;
+            case "black":
+                x = "black";
+                break;
+            case "white":
+                x = "white";
+                break;
+        }
+        if (x == "white") y = 14;
+        else y = 2;
+
+    }
+
+    function draw() {
+        ctx.beginPath();
+        ctx.moveTo(prevX, prevY);
+        ctx.lineTo(currX, currY);
+        ctx.strokeStyle = x;
+        ctx.lineWidth = y;
+        ctx.stroke();
+        ctx.closePath();
+    }
+
+    function dot(x, y) {
+        ctx.beginPath();
+        ctx.fillStyle = x;
+        ctx.arc(x, y, 1, 0, Math.PI * 2, true);
+        ctx.fill();
+        //            ctx.stroke();
+        ctx.closePath();
+    }
+
+    function line(fromx, fromy, tox, toy) {
+        ctx.beginPath();
+        ctx.moveTo(fromx, fromy);
+        ctx.lineTo(tox, toy);
+        ctx.strokeStyle = x;
+        ctx.lineWidth = y;
+        ctx.stroke();
+        ctx.closePath();
+    }
+
+
+    function erase() {
+        var m = confirm("Want to clear");
+        location.reload();
+//        if (m) {
+//            ctx.clearRect(0, 0, w, h);
+//            document.getElementById("canvasimg").style.display = "none";
+//        }
+    }
+
+    function save() {
+        document.getElementById("canvasimg").style.border = "2px solid";
+        var dataURL = canvas.toDataURL();
+        document.getElementById("canvasimg").src = dataURL;
+        imageData = canvas.toDataURL('image/png');
+        //        document.getElementById("upload-image").src = dataURL;
+
+        document.getElementById("canvasimg").style.display = "inline";
+
+        
+        var httpPost = new XMLHttpRequest();
+        var url = '{{ request.path }}';
+//        var url = 'http://127.0.0.1:8000/edit/{{pk}}';
+        var params = JSON.stringify({
+            image: imageData,
+            id: "83",
+        });
+        httpPost.open('POST', url, true);
+        
+        httpPost.onreadystatechange = function(err) {
+            if (httpPost.readyState == 4 && httpPost.status == 200) {
+                console.log(httpPost.responseText);
+            } else {
+                console.log(err);
+            }
+        };
+        // Set the content type of the request to json since that's what's being sent
+        httpPost.setRequestHeader('Content-Type', 'application/json');
+        //            httpPost.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        httpPost.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
+        //            httpPost.open("POST", path, true);
+        //            httpPost.send("id=Henry");
+        httpPost.send(params);
+    }
+
+    function findxy(res, e) {
+        if (res == 'down') {
+            prevX = currX;
+            prevY = currY;
+            currX = e.clientX - canvas.offsetLeft;
+            currY = e.clientY - canvas.offsetTop;
+
+            flag = true;
+            dot_flag = true;
+            if (dot_flag) {
+                ctx.beginPath();
+                ctx.fillStyle = x;
+                ctx.fillRect(currX, currY, 2, 2);
+                ctx.closePath();
+                dot_flag = false;
+            }
+        }
+        if (res == 'up' || res == "out") {
+            flag = false;
+        }
+        if (res == 'move') {
+            if (flag) {
+                prevX = currX;
+                prevY = currY;
+                currX = e.clientX - canvas.offsetLeft;
+                currY = e.clientY - canvas.offsetTop;
+                draw();
+            }
+        }
+    }
+
+</script>
+
+<body onload="init()">
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-leaf"></i> &nbsp;Ptreat
+            </div>
+            <div class="nav-controls">
+                <a href="#">
+                    Login <i class="fas fa-angle-right"></i>
+
+                </a>
+            </div>
+
+        </nav>
+
+
+        <!--       {{upload.image.url}}-->
+        <img style="display: none;" id="html5" src="{{file.image.url}}" />
+    <section class="main-section">
+
+       <div class="pick-color">
+
+<!--        <div style="">Choose Color</div>-->
+<!--        <br>-->
+
+        <div class ="color-btn" style="background:green;" id="green" onclick="color(this)"></div>
+        <div class ="color-btn" style="background:blue;" id="blue" onclick="color(this)"></div>
+        <div class ="color-btn" style="background:red;" id="red" onclick="color(this)"></div>
+        <div class ="color-btn" style="background:yellow;" id="yellow" onclick="color(this)"></div>
+        <div class ="color-btn" style="background:orange;" id="orange" onclick="color(this)"></div>
+        <div class ="color-btn" style="background:black;" id="black" onclick="color(this)"></div>
+       </div>
+
+<!--
+        <div style="position:absolute;top:20%;left:43%;">Eraser</div>
+        <div style="position:absolute;top:22%;left:45%;width:15px;height:15px;background:white;border:2px solid;" id="white" onclick="color(this)"></div>
+-->
+       <div class="result-body">
+        <canvas id="can" class="canvas" width="256" height="256" style=""></canvas>
+
+        <div class="control-buttons">
+            <input type="button" value="save" id="btn" class="btn" size="30" onclick="save()" style="">
+            <input type="button" class="btn" value="clear" id="clr" size="23" onclick="erase()" style="">
+
+            <a href="/result/{{pk}}/eng" class="btn next-btn" style="">Next Step </a>
+        </div>
+
+        <img id="canvasimg" style="" style="display:none;">
+   </div>
+    </section>
+    </header>
+</body>
+
+</html>

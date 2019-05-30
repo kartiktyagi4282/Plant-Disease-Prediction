@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ptreat</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="{% static 'result.css'%}">
+<!--    <link rel="stylesheet" href="../static_files/result.css">-->
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-leaf"></i> &nbsp;Ptreat
+            </div>
+            <div class="nav-controls">
+                <a href="#">
+                    Login <i class="fas fa-angle-right"></i>
+
+                </a>
+            </div>
+
+        </nav>
+        <div class="blur-window"></div>
+        <div class="result-box">
+          <a href="/" class="back-button">
+              <i class="fas fa-arrow-circle-left"></i>
+
+          </a>
+          <div class="lang_bar">
+          <a class ="lang_btn"href="/result/{{pk}}/eng">English</a>
+          <a class ="lang_btn"href="/result/{{pk}}/hindi">हिंदी</a>
+          <a class ="lang_btn"href="/result/{{pk}}/tamil">தமிழ்</a>
+          <a class ="lang_btn"href="/result/{{pk}}/punjabi">ਪੰਜਾਬੀ</a>
+          </div>
+           <div class="result-heading">
+               {{prediction_result_text}}
+           </div>
+            <div class="result-image">
+                <img src="{{upload.image.url}}" alt="">
+                <img src="{{upload.edited.url}}" alt="">
+                {% if upload.segmented %}
+                <img src="{{upload.segmented.url}}" alt="">
+                {% endif %}
+                
+            </div>
+            <div class="result-data">
+                <table>
+                    <tr>
+                        <td class="col-left">Plant</td>
+                        <td>{{plant}}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-left">Disease</td>
+                        <td>{{disease.name}}</td>
+                    </tr>
+                    <tr>
+                        <td class="col-left">Symptoms</td>
+                        <td class="col-right">{{disease.symptoms}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-left">Cause</td>
+                        <td class="col-right"> {{disease.cause}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-left">Acuracy Percentage</td>
+                        <td class="col-right">{{main_accuracy}}%
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-left">Comments</td>
+                        <td class="col-right">  {{disease.comments}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-left">Management</td>
+                        <td class="col-right">  {{disease.management}}
+
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+            <div class="secondary">
+                <div class="secondary-heading">
+                    {{might_also_be_text}}
+                </div>
+                {% for result in other_results %}
+                <div class="secondary-box">
+                    <div class="secondary-box-image">
+                        <img src="{% static 'images/4.jpg'%}" alt="">
+                    </div>
+                    <div class="secondary-box-data">
+                        <div class="secondary-name">
+                            {{result.plant}}, {{result.disease}}
+                        </div>
+                        <div class="secondary-accuracy">
+                            with the accuracy of {{result.accuracy}}%
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </header>
+    <main>
+
+    </main>
+</body>
+<script>
+
+
+</script>
+
+</html>
