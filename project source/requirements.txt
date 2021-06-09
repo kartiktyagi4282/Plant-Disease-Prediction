@@ -4,7 +4,7 @@ beautifulsoup4==4.6.3
 cachetools==3.1.1
 certifi==2019.3.9
 chardet==3.0.4
-Django==2.2.1
+Django==2.2.22
 django-rest-framework==0.1.0
 djangorestframework==3.9.4
 gast==0.2.2
